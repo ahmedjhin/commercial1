@@ -5,8 +5,12 @@
     {% csrf_token %}
     <label for="ListName">ListName</label>
     <input type="text" name="ListName" id="ListName">
-    <input type="text" name="" id="">
+    <select name="ListCategory" id="ListCategory">
+        <option selected>Open this select menu</option>
+        {% for item in catagores %}
+        <option value="{{item}}">{{item}}</option>
+        {% endfor %}
+    </select>
     <button type="submit">send itttttt</button>
 </form>
-
 {% endblock %}

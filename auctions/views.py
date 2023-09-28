@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Listing
+from .models import User, Listing, Categories
 
 
 def index(request):
@@ -13,13 +13,17 @@ def index(request):
 def CreatList(request):
     if request.method == "POST":
         ListNameq =  request.POST.get("ListName")
-        if ListNameq == "":
-            bombq = Listing(ListName=ListNameq)
-            bombq.save()
-            message = "dddde"
-            return render(request, "auctions/index.html",{'message': message} )
+        ListCategoryq = request.POST.get("ListCategory")
+        listcatfilterd = Categories.objects.get(CateGname=ListCategoryq)
+        NewList = Listing(ListName=ListNameq,ListCategory=listcatfilterd)
+        NewList.save()
+        
+        catagores = Categories.objects.all()
+        return render(request, "auctions/index.html",{
+                                                          'catagores':catagores} )
     else:
-        return render(request, "auctions/CreatListin.html")
+        catagores = Categories.objects.all()
+        return render(request, "auctions/CreatListin.html",{'catagores':catagores})
 
 def login_view(request):
     if request.method == "POST":
