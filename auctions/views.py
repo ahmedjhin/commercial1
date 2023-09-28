@@ -4,12 +4,22 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User
+from .models import User, Listing
 
 
 def index(request):
     return render(request, "auctions/index.html")
 
+def CreatList(request):
+    if request.method == "POST":
+        ListNameq =  request.POST.get("ListName")
+        if ListNameq == "":
+            bombq = Listing(ListName=ListNameq)
+            bombq.save()
+            message = "dddde"
+            return render(request, "auctions/index.html",{'message': message} )
+    else:
+        return render(request, "auctions/CreatListin.html")
 
 def login_view(request):
     if request.method == "POST":
@@ -51,7 +61,7 @@ def register(request):
 
         # Attempt to create new user
         try:
-            user = User.objects.create_user(username, email, password)
+            user = User.objects.create_user(username, email, password) # type: ignore
             user.save()
         except IntegrityError:
             return render(request, "auctions/register.html", {
