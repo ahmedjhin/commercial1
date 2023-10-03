@@ -5,6 +5,7 @@
     {% csrf_token %}
     <label for="ListName">ListName</label>
     <input type="text" name="ListName" id="ListName">
+    
     <select name="ListCategory" id="ListCategory">
         <option selected>Open this select menu</option>
         {% for item in catagores %}

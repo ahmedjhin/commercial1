@@ -14,6 +14,10 @@ class Categories(models.Model):
     def __str__(self):
         return self.CateGname
 
+class Bid(models.Model):
+    bidAmount = models.IntegerField(max_length=10)
+    BidUser = models.ForeignKey(User ,on_delete=models.CASCADE,blank=True, null=True, related_name="BidUser")
+    BidOnThisList = models.ForeignKey('Listing',on_delete=models.CASCADE,blank=True, null=True, related_name="BidOnThisList")
 
 class Listing(models.Model):
     ListName = models.CharField(max_length=20)
@@ -21,6 +25,7 @@ class Listing(models.Model):
     ListOwner = models.ForeignKey(User, on_delete=models.CASCADE,blank=True, null=True, related_name="ListOwner")
     ListDiscription = models.CharField(max_length=200)
     ListImagesUrl = models.CharField(max_length=1000, blank=True, null=True,)
-
+    ListPrice = models.CharField(max_length=20)
+    ListBid = models.ForeignKey(Bid, on_delete=models.CASCADE,blank=True, null=True, related_name="ListBid")
     def __str__(self):
         return self.ListName
