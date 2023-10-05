@@ -3,18 +3,40 @@
 {% block body %}
 <form action="{% url 'CreatList' %}" method="POST">
     {% csrf_token %}
-    <label for="ListName">ListName</label>
-    <input type="text" name="ListName" id="ListName">
-    
-    <select name="ListCategory" id="ListCategory">
-        <option selected>Open this select menu</option>
+    <div class="ListContainer">
+
+      <div class="form-floating width">
+        <input class="form-control" placeholder="Discription" type="text" name="ListName" id="ListName">
+        <label for="ListName">ListName</label>
+      </div>
+      
+      <div class="form-floating width">
+        <input class="form-control" type="text" name="ListDiscription" id="ListDiscription" placeholder="Discription">
+        <label for="ListDiscription"> Discription</label>
+      </div>
+      
+      
+      <div class="form-floating width" >
+        <input type="number" class="form-control" id="price" placeholder="price">
+        <label for="price">Price</label>
+      </div>
+
+      <div class="form-floating width" >
+        <input type="number" class="form-control" id="price" placeholder="price">
+        <label for="price">Price</label>
+      </div>
+
+      <div class="form-floating width" >
+        <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="ListCategory" id="ListCategory" >
+        <option selected></option>
         {% for item in catagores %}
         <option value="{{item}}">{{item}}</option>
         {% endfor %}
-    </select>
-
-    <input type="text" name="" id="">
-
-    <button type="submit">send itttttt</button>
-</form>
-{% endblock %}
+      </select>
+      <label for="floatingSelect">chose your category</label>
+    </div>
+    <button class="btn btn-primary width" type="submit">Creat List</button>
+  </div>
+  </form>
+  
+  {% endblock %}

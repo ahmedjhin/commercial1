@@ -1,3 +1,11 @@
 body {
     padding: 10px;
 }
+.width{
+    max-width: 700px;
+}
+.ListContainer{
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
