@@ -4,6 +4,9 @@
     <h2>Active Listings</h2>
     
     TODO
-
+    {% for i in list%}
+    {{i.ListName}}
+    {{i.created_at}}
+    {% endfor%}
     {{message}}
 {% endblock %}
