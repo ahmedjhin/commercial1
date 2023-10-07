@@ -9,3 +9,8 @@ body {
     flex-direction: column;
     row-gap: 10px;
 }
+.displayListContainer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
