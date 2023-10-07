@@ -8,8 +8,8 @@ from .models import User, Listing, Categories
 
 
 def index(request):
-    list = Listing.objects.all()
-    return render(request, "auctions/index.html",{"list":list})
+    Activelists = Listing.objects.filter(isActive=True)
+    return render(request, "auctions/index.html",{"Activelists":Activelists})
 
 def CreatList(request):
     if request.method == "POST":
