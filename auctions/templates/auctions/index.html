@@ -11,7 +11,8 @@
         <div class="card-body">
           <h5 class="card-title">{{i.ListName}}</h5>
           <p class="card-text">{{i.ListDiscription}}</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <p>item price:{{i.ListPrice}}</p>
+          <a href="{% url  'DisplayList' pk=i.pk %}" class="btn btn-primary">Go somewhere</a>
         </div>
       </div>
     {% endfor%}

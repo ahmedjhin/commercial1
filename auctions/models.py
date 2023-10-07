@@ -33,6 +33,7 @@ class Listing(models.Model):
     ListCategory = models.ForeignKey(Categories, on_delete=models.CASCADE, null=True,blank=True,related_name='ListingCategory')
     ListImagesUrl = models.CharField(max_length=1000, blank=True, null=True,)
     ListDiscription = models.CharField(max_length=200)
+    ListWatchList = models.ManyToManyField(User, blank=True, null=True)
 
     def __str__(self):
         return  self.ListName

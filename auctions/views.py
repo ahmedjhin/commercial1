@@ -35,6 +35,19 @@ def CreatList(request):
     else:
         catagores = Categories.objects.all()
         return render(request, "auctions/CreatListin.html",{'catagores':catagores})
+    
+def DisplayList(request , pk):
+    if request.method == "GET":
+        List = Listing.objects.filter(pk=pk)
+        return render(request, "auctions/DisplayList.html",{'List':List})
+
+def AddListTowatchList(request , pk):
+    if request.method == "POST":
+        userThatOwnsTheWatchList = User.objects.filter(Username=request.user)
+        theList = Listing.objects.filter(pk=pk)
+        theList.ListWatchList.add(userThatOwnsTheWatchList) # type: ignore
+        theList.save() # type: ignore
+        return  HttpResponseRedirect(reverse("index"))
 
 def login_view(request):
     if request.method == "POST":

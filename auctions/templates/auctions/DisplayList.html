@@ -1,0 +1,25 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+{% for A in List %}
+<div class="card" style="width: 18rem;">
+    <img src="{{ A.ListImagesUrl }}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{A.ListName}}</h5>
+      <p class="card-text">{{A.ListDiscription}}</p>
+      
+
+      <form action="{% url 'AddListTowatchList' pk=A.pk %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Add to Watchlist</button>
+        <input type="hidden" name="username" value="{{ User.username }}" />
+        <input type="hidden" name="ListPk" value="{{ a.pk}}" />
+    </form>
+
+      <a  href="#" class="btn btn-primary">Add To Watch List</a>
+    </div>
+  </div>
+
+{% endfor%}
+{% endblock %}
