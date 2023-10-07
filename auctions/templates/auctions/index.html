@@ -3,7 +3,10 @@
 {% block body %}
     <h2>Active Listings</h2>
     
-    TODO
-
-    {{message}}
+    
+    {% for i in Activelists %}
+    
+    {{i.ListName}}
+    {{i.created_at}}
+    {% endfor%}
 {% endblock %}
