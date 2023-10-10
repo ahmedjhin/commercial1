@@ -10,4 +10,6 @@ urlpatterns = [
     path('CreatList', views.CreatList, name="CreatList"),
     path('DisplayList/<int:pk>', views.DisplayList, name="DisplayList"), # type: ignore
     path('AddListTowatchList/<int:pk>', views.AddListTowatchList,name='AddListTowatchList'),
+    path('RemoveListTowatchList/<int:pk>',views.RemoveListTowatchList,name = 'RemoveListTowatchList'),
+    path('WatchList', views.WatchList , name='WatchList'),
 ]
