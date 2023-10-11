@@ -9,7 +9,12 @@ from .models import User, Listing, Categories
 
 def index(request):
     Activelists = Listing.objects.filter(isActive=True)
-    return render(request, "auctions/index.html",{"Activelists":Activelists})
+    if User is authenticate:
+        test = Listing.objects.exclude(ListOwner=request.user).all()
+        return render(request, "auctions/index.html",{ "Activelists":Activelists,"test":test })
+    else:
+        return render(request, "auctions/index.html",{ "Activelists":Activelists})
+    
 
 def CreatList(request):
     if request.method == "POST":
@@ -38,16 +43,30 @@ def CreatList(request):
     
 def DisplayList(request , pk):
     if request.method == "GET":
-        List = Listing.objects.filter(pk=pk)
-        return render(request, "auctions/DisplayList.html",{'List':List})
+        List = Listing.objects.get(pk=pk)
+        IsinwatchList = request.user in List.ListWatchList.all()
+        return render(request, "auctions/DisplayList.html",{'List':List,'IsinwatchList':IsinwatchList})
 
 def AddListTowatchList(request , pk):
     if request.method == "POST":
-        userThatOwnsTheWatchList = User.objects.filter(Username=request.user)
-        theList = Listing.objects.filter(pk=pk)
-        theList.ListWatchList.add(userThatOwnsTheWatchList) # type: ignore
-        theList.save() # type: ignore
+        userThatOwnsTheWatchList = request.user
+        theList = Listing.objects.get(pk=pk)
+        theList.ListWatchList.add(userThatOwnsTheWatchList) 
+        theList.save() 
         return  HttpResponseRedirect(reverse("index"))
+
+
+def RemoveListTowatchList(request , pk):
+    if request.method == "POST":
+        userThatOwnsTheWatchList = request.user
+        theList = Listing.objects.get(pk=pk)
+        theList.ListWatchList.remove(userThatOwnsTheWatchList) 
+        theList.save() 
+        return  HttpResponseRedirect(reverse("index"))
+    
+def WatchList(request):
+    listingsD = Listing.objects.filter(ListWatchList=request.user)
+    return render(request,  'auctions/watchList.html', {'listingsD':listingsD})
 
 def login_view(request):
     if request.method == "POST":
