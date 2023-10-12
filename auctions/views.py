@@ -3,8 +3,9 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.db.models import Max
 
-from .models import User, Listing, Categories
+from .models import User, Listing, Categories, Bid
 
 
 def index(request):
@@ -45,7 +46,12 @@ def DisplayList(request , pk):
     if request.method == "GET":
         List = Listing.objects.get(pk=pk)
         IsinwatchList = request.user in List.ListWatchList.all()
-        return render(request, "auctions/DisplayList.html",{'List':List,'IsinwatchList':IsinwatchList})
+        bidList = Bid.objects.filter(BidOnThisList=List).aggregate(haighstbid=Max('bidAmount'))['haighstbid']
+        bidListmaxs = Bid.objects.filter(bidAmount=bidList,BidOnThisList=List)
+        return render(request, "auctions/DisplayList.html",{'List':List,
+                                                            'IsinwatchList':IsinwatchList,
+                                                            'bidList':bidList,
+                                                            'bidListmaxs':bidListmaxs,})
 
 def AddListTowatchList(request , pk):
     if request.method == "POST":
@@ -67,6 +73,19 @@ def RemoveListTowatchList(request , pk):
 def WatchList(request):
     listingsD = Listing.objects.filter(ListWatchList=request.user)
     return render(request,  'auctions/watchList.html', {'listingsD':listingsD})
+
+def AddBid(request):
+    if request.method == 'POST':
+        BidOwner = request.user
+        ListId= request.POST.get('ListId')
+        ListInstance = Listing.objects.get(pk=ListId)
+        bid = request.POST.get('BidAmount')
+        newBid = Bid(BidUser=BidOwner,
+                     bidAmount=bid,
+                     BidOnThisList=ListInstance,)
+        newBid.save()
+        return render(request, "auctions/index.html")
+    return render(request, "auctions/index.html")
 
 def login_view(request):
     if request.method == "POST":

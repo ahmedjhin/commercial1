@@ -7,6 +7,8 @@ class User(AbstractUser):
     id = models.BigAutoField(primary_key=True)
     pass
 
+    
+
 
 class Categories(models.Model):
     id = models.BigAutoField(primary_key=True)
@@ -22,6 +24,9 @@ class Bid(models.Model):
     bidAmount = models.IntegerField()
     BidOnThisList = models.ForeignKey('Listing',on_delete=models.CASCADE,blank=True, null=True, related_name="BidOnThisList")
 
+
+    
+    
 class Listing(models.Model):
     id = models.BigAutoField(primary_key=True)
     ListBid = models.ForeignKey(Bid, on_delete=models.CASCADE,blank=True, null=True, related_name="ListBid")
@@ -32,8 +37,8 @@ class Listing(models.Model):
     created_at = models.DateTimeField(auto_now_add=True,blank=True, null=True)
     ListCategory = models.ForeignKey(Categories, on_delete=models.CASCADE, null=True,blank=True,related_name='ListingCategory')
     ListImagesUrl = models.CharField(max_length=1000, blank=True, null=True,)
-    ListDiscription = models.CharField(max_length=200)
     ListWatchList = models.ManyToManyField(User)
+    ListDiscription = models.CharField(max_length=200)
 
     def __str__(self):
         return  self.ListName

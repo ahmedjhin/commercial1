@@ -2,25 +2,19 @@
 
 {% block body %}
     <h2>Active Listings</h2>
-    {% for d in test %}
-     <p>
-       {{d.ListName}}
-     </p> 
-      d
-    {% endfor %}
     
     TODO
     <div class="displayListContainer">
-    {% for i in Activelists%}
+    {% for i in Activelists %}
      <div class="card " style="width: 18rem;">
         <img src="{{ i.ListImagesUrl }}" class="card-img-top" alt="{{ i.ListImagesUrl }}">
         <div class="card-body">
           <h5 class="card-title">{{i.ListName}}</h5>
           <p class="card-text">{{i.ListDiscription}}</p>
           <p>item price:{{i.ListPrice}}</p>
-          <a href="{% url  'DisplayList' pk=i.pk %}" class="btn btn-primary">Go somewhere</a>
+          <a href="{% url  'DisplayList' pk=i.pk %}" class="btn btn-primary">Show the item</a>
         </div>
-      </div>
-    {% endfor%}
      </div>
+    {% endfor %}
+    </div>
 {% endblock %}

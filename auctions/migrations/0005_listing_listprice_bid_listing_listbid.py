@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='listing',
             name='ListPrice',
-            field=models.CharField(default=1, max_length=20),
+            field=models.CharField(default=1, max_length=20), # type: ignore
             preserve_default=False,
         ),
         migrations.CreateModel(

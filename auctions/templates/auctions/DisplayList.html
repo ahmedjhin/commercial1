@@ -8,7 +8,8 @@
     <div class="card-body">
       <h5 class="card-title">{{List.ListName}}</h5>
       <p class="card-text">{{List.ListDiscription}}</p>
-      
+
+      <!--  add and remove from watch list area -->
       {% if IsinwatchList == False %}
       <form action="{% url 'AddListTowatchList' pk=List.pk %}" method="POST">
         {% csrf_token %}
@@ -20,6 +21,29 @@
         <button type="submit" class="btn btn-primary">Remove From Watchlist</button>
       </form>
       {% endif %}
+      <!-- end add and remove from watch list area -->
+      <!-- bid area-->
+      <form action="{% url 'AddBid' %}" method="POST" >
+        {% csrf_token %}
+        <input type="hidden" name="ListId" value="{{List.pk}}">
+        <input type="number" name="BidAmount" id="BidAmount">
+        <button type="submit">bid</button>
+      </form>
+      {% for o in bidListmaxs %}
+      {{o.BidUser}}
+      {{o.bidAmount}}
+      {%endfor%}
+      <!-- end bid area -->
+      <!-- coomint area  -->
+      <form action="" method="POST"> 
+        {% csrf_token %}
+        <input type="text" name="commint" id="commint">
+        <button type="submit">commint</button>
+      </form>
+
+      
+
+      <!-- end commint area -->
     </div>
   </div>
 
