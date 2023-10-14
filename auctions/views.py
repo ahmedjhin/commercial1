@@ -1,11 +1,12 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render ,redirect
 from django.urls import reverse
 from django.db.models import Max
 
-from .models import User, Listing, Categories, Bid
+
+from .models import User, Listing, Categories, Bid,comments
 
 
 def index(request):
@@ -48,10 +49,14 @@ def DisplayList(request , pk):
         IsinwatchList = request.user in List.ListWatchList.all()
         bidList = Bid.objects.filter(BidOnThisList=List).aggregate(haighstbid=Max('bidAmount'))['haighstbid']
         bidListmaxs = Bid.objects.filter(bidAmount=bidList,BidOnThisList=List)
+        comment = reversed(comments.objects.filter(onList=List))
+
         return render(request, "auctions/DisplayList.html",{'List':List,
                                                             'IsinwatchList':IsinwatchList,
                                                             'bidList':bidList,
-                                                            'bidListmaxs':bidListmaxs,})
+                                                            'bidListmaxs':bidListmaxs,
+                                                            'comment':comment,})
+    return render(request, "auctions/DisplayList.html")
 
 def AddListTowatchList(request , pk):
     if request.method == "POST":
@@ -59,7 +64,7 @@ def AddListTowatchList(request , pk):
         theList = Listing.objects.get(pk=pk)
         theList.ListWatchList.add(userThatOwnsTheWatchList) 
         theList.save() 
-        return  HttpResponseRedirect(reverse("index"))
+        return  HttpResponseRedirect(reverse("DisplayList" , args=(pk,)))
 
 
 def RemoveListTowatchList(request , pk):
@@ -68,7 +73,7 @@ def RemoveListTowatchList(request , pk):
         theList = Listing.objects.get(pk=pk)
         theList.ListWatchList.remove(userThatOwnsTheWatchList) 
         theList.save() 
-        return  HttpResponseRedirect(reverse("index"))
+        return  redirect(reverse("DisplayList" ,args=(pk,)))
     
 def WatchList(request):
     listingsD = Listing.objects.filter(ListWatchList=request.user)
@@ -85,6 +90,20 @@ def AddBid(request):
                      BidOnThisList=ListInstance,)
         newBid.save()
         return render(request, "auctions/index.html")
+    return render(request, "auctions/index.html")
+
+def AddComment(request,pk):
+    if request.method == 'POST':
+        CommentOwnerq = request.user
+        Commentq = request.POST.get('Comment')
+        commentOnListq = request.POST.get('CommentOnList')
+        listinstans = Listing.objects.get(pk=commentOnListq)
+        newComment = comments(Comment=Commentq,
+                              owner=CommentOwnerq,
+                              onList=listinstans)
+        newComment.save()
+        return redirect(reverse("DisplayList" ,args=(pk,)))
+
     return render(request, "auctions/index.html")
 
 def login_view(request):

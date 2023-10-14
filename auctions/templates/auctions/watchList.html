@@ -1,7 +1,7 @@
 {% extends  "auctions/layout.html" %}
 
 {% block body %} 
-{{d}}
+
 {% for Q in listingsD %}
 <div class="card" style="width: 18rem;">
 
@@ -9,7 +9,7 @@
 
     <div class="card-body">
       <h5 class="card-title">{{Q.ListName}}</h5>
-      <p class="card-text">{{Q.ListDiscription}}</p> 
+      <p class="card-text">{{Q.ListDiscription}}</p>
     </div>
     
 </div>

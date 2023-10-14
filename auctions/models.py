@@ -7,7 +7,8 @@ class User(AbstractUser):
     id = models.BigAutoField(primary_key=True)
     pass
 
-    
+
+
 
 
 class Categories(models.Model):
@@ -25,8 +26,13 @@ class Bid(models.Model):
     BidOnThisList = models.ForeignKey('Listing',on_delete=models.CASCADE,blank=True, null=True, related_name="BidOnThisList")
 
 
-    
-    
+class comments(models.Model):
+    Comment = models.CharField(max_length=100)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    onList = models.ForeignKey('Listing', on_delete=models.CASCADE)
+
+
+
 class Listing(models.Model):
     id = models.BigAutoField(primary_key=True)
     ListBid = models.ForeignKey(Bid, on_delete=models.CASCADE,blank=True, null=True, related_name="ListBid")

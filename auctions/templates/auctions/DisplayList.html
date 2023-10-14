@@ -1,51 +1,55 @@
-{% extends "auctions/layout.html" %}
+{% extends "auctions/layout.html" %} {% block body %}
 
-{% block body %}
+<div class="card" style="width: 18rem">
+  <!--  add and remove from watch list area -->
+  {% if IsinwatchList == False %}
+  <form action="{% url 'AddListTowatchList' pk=List.pk %}" method="POST">
+    {% csrf_token %}
+    <button style=" width:100%;" type="submit" class="btn btn-primary">Add to Watchlist</button>
+  </form>
+  {% else %}
+  <form action="{% url 'RemoveListTowatchList' pk=List.pk %}" method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">Remove From Watchlist</button>
+  </form>
+  {% endif %}
+  <!-- end add and remove from watch list area -->
+  <img src="{{ List.ListImagesUrl }}" class="card-img-top" alt="..." />
+  <div class="card-body">
+    <h5 class="card-title">{{List.ListName}}</h5>
+    <p class="card-text">{{List.ListDiscription}}</p>
 
+    <!-- bid area-->
+    <form action="{% url 'AddBid' %}" method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="ListId" value="{{List.pk}}" />
+      <input type="number" name="BidAmount" id="BidAmount" />
+      <button type="submit">bid</button>
+    </form>
+    {% for o in bidListmaxs %} {{o.BidUser}} {{o.bidAmount}} {%endfor%}
+    <!-- end bid area -->
+    <!-- coomint area  -->
+    <form action="{% url 'AddComment' pk=List.pk %}" method="POST">
+      {% csrf_token %}
+      <input type="text" name="Comment" id="Comment" />
+      <input
+        type="hidden"
+        name="CommentOnList"
+        id="CommentOnList"
+        value="{{List.pk}}"
+      />
+      <button type="submit">commint</button>
+    </form>
 
-<div class="card" style="width: 18rem;">
-    <img src="{{ List.ListImagesUrl }}" class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">{{List.ListName}}</h5>
-      <p class="card-text">{{List.ListDiscription}}</p>
+    {%for c in comment %} 
+    {{c.owner}}
+    <p>
+      {{c.Comment}} 
+    </p>
+    {%endfor%}
 
-      <!--  add and remove from watch list area -->
-      {% if IsinwatchList == False %}
-      <form action="{% url 'AddListTowatchList' pk=List.pk %}" method="POST">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-primary">Add to Watchlist</button>
-      </form>
-      {% else %}
-      <form action="{% url 'RemoveListTowatchList' pk=List.pk %}" method="POST">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-primary">Remove From Watchlist</button>
-      </form>
-      {% endif %}
-      <!-- end add and remove from watch list area -->
-      <!-- bid area-->
-      <form action="{% url 'AddBid' %}" method="POST" >
-        {% csrf_token %}
-        <input type="hidden" name="ListId" value="{{List.pk}}">
-        <input type="number" name="BidAmount" id="BidAmount">
-        <button type="submit">bid</button>
-      </form>
-      {% for o in bidListmaxs %}
-      {{o.BidUser}}
-      {{o.bidAmount}}
-      {%endfor%}
-      <!-- end bid area -->
-      <!-- coomint area  -->
-      <form action="" method="POST"> 
-        {% csrf_token %}
-        <input type="text" name="commint" id="commint">
-        <button type="submit">commint</button>
-      </form>
-
-      
-
-      <!-- end commint area -->
-    </div>
+    <!-- end commint area -->
   </div>
-
+</div>
 
 {% endblock %}
