@@ -10,7 +10,7 @@
   {% else %}
   <form action="{% url 'RemoveListTowatchList' pk=List.pk %}" method="POST">
     {% csrf_token %}
-    <button type="submit" class="btn btn-primary">Remove From Watchlist</button>
+    <button style=" width:100%;" type="submit" class="btn btn-primary">Remove From Watchlist</button>
   </form>
   {% endif %}
   <!-- end add and remove from watch list area -->
@@ -18,7 +18,7 @@
   <div class="card-body">
     <h5 class="card-title">{{List.ListName}}</h5>
     <p class="card-text">{{List.ListDiscription}}</p>
-
+    <h1>{{List.ListPrice}}$</h1>
     <!-- bid area-->
     <form action="{% url 'AddBid' %}" method="POST">
       {% csrf_token %}
@@ -26,7 +26,12 @@
       <input type="number" name="BidAmount" id="BidAmount" />
       <button type="submit">bid</button>
     </form>
-    {% for o in bidListmaxs %} {{o.BidUser}} {{o.bidAmount}} {%endfor%}
+
+    {% for o in bidListmaxs %}
+    <p>haighest pid from </p>
+     {{o.BidUser}} 
+    {{o.bidAmount}}
+     {%endfor%}
     <!-- end bid area -->
     <!-- coomint area  -->
     <form action="{% url 'AddComment' pk=List.pk %}" method="POST">
@@ -41,10 +46,10 @@
       <button type="submit">commint</button>
     </form>
 
-    {%for c in comment %} 
+    {%for c in comment %}
     {{c.owner}}
     <p>
-      {{c.Comment}} 
+    {{c.Comment}}
     </p>
     {%endfor%}
 

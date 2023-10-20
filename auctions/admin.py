@@ -5,8 +5,12 @@ from .models import User, Listing, Categories, Bid,comments
 
 class showBidDetails(admin.ModelAdmin):
     list_display = ('BidUser','bidAmount','BidOnThisList')
+
+class commentsDetails(admin.ModelAdmin):
+    list_display = ('Comment','owner','onList')
+
 admin.site.register(User)
 admin.site.register(Listing)
 admin.site.register(Categories)
 admin.site.register(Bid, showBidDetails)
-admin.site.register(comments)
+admin.site.register(comments, commentsDetails)

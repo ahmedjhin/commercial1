@@ -14,3 +14,8 @@ body {
     flex-direction: row;
     flex-wrap: wrap;
 }
+
+.flex{
+    display: flex;
+    gap: 22px;
+}
