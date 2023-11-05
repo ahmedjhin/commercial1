@@ -62,8 +62,8 @@ def AddListTowatchList(request , pk):
     if request.method == "POST":
         userThatOwnsTheWatchList = request.user
         theList = Listing.objects.get(pk=pk)
-        theList.ListWatchList.add(userThatOwnsTheWatchList) 
-        theList.save() 
+        theList.ListWatchList.add(userThatOwnsTheWatchList)
+        theList.save()
         return  HttpResponseRedirect(reverse("DisplayList" , args=(pk,)))
 
 
@@ -71,15 +71,15 @@ def RemoveListTowatchList(request , pk):
     if request.method == "POST":
         userThatOwnsTheWatchList = request.user
         theList = Listing.objects.get(pk=pk)
-        theList.ListWatchList.remove(userThatOwnsTheWatchList) 
-        theList.save() 
+        theList.ListWatchList.remove(userThatOwnsTheWatchList)
+        theList.save()
         return  redirect(reverse("DisplayList" ,args=(pk,)))
     
 def WatchList(request):
     listingsD = Listing.objects.filter(ListWatchList=request.user)
     return render(request,  'auctions/watchList.html', {'listingsD':listingsD})
 
-def AddBid(request):
+def AddBid(request,pk):
     if request.method == 'POST':
         BidOwner = request.user
         ListId= request.POST.get('ListId')
@@ -89,8 +89,8 @@ def AddBid(request):
                      bidAmount=bid,
                      BidOnThisList=ListInstance,)
         newBid.save()
-        return render(request, "auctions/index.html")
-    return render(request, "auctions/index.html")
+        return redirect(reverse("DisplayList" ,args=(pk,)))
+    return redirect(reverse("DisplayList" ,args=(pk,)))
 
 def AddComment(request,pk):
     if request.method == 'POST':
@@ -105,6 +105,12 @@ def AddComment(request,pk):
         return redirect(reverse("DisplayList" ,args=(pk,)))
 
     return render(request, "auctions/index.html")
+
+def unactive(request,ok):
+    if request.method == 'POST':
+        request.
+    
+    return  render(request, "auctions/DisplayList.html")
 
 def login_view(request):
     if request.method == "POST":

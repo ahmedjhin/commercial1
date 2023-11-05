@@ -12,6 +12,7 @@ urlpatterns = [
     path('AddListTowatchList/<int:pk>', views.AddListTowatchList,name='AddListTowatchList'), # type: ignore
     path('RemoveListTowatchList/<int:pk>',views.RemoveListTowatchList,name = 'RemoveListTowatchList'), # type: ignore
     path('WatchList', views.WatchList , name='WatchList'),
-    path('AddBid', views.AddBid, name="AddBid"),
+    path('AddBid/<int:pk>', views.AddBid, name="AddBid"),
     path('AddComment/<int:pk>', views.AddComment, name="AddComment"),
+    path('unactive/<int:pk>', views.unactive, name="Unactive"),
 ]

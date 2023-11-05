@@ -2,6 +2,7 @@
 
 <div class="card" style="width: 18rem">
   <!--  add and remove from watch list area -->
+  {% if user.is_authenticated %}
   {% if IsinwatchList == False %}
   <form action="{% url 'AddListTowatchList' pk=List.pk %}" method="POST">
     {% csrf_token %}
@@ -13,6 +14,7 @@
     <button style=" width:100%;" type="submit" class="btn btn-primary">Remove From Watchlist</button>
   </form>
   {% endif %}
+  {% endif %}
   <!-- end add and remove from watch list area -->
   <img src="{{ List.ListImagesUrl }}" class="card-img-top" alt="..." />
   <div class="card-body">
@@ -20,11 +22,11 @@
     <p class="card-text">{{List.ListDiscription}}</p>
     <h1>{{List.ListPrice}}$</h1>
     <!-- bid area-->
-    <form action="{% url 'AddBid' %}" method="POST">
+    <form action="{% url 'AddBid' pk=List.pk %}" method="POST">
       {% csrf_token %}
       <input type="hidden" name="ListId" value="{{List.pk}}" />
       <input type="number" name="BidAmount" id="BidAmount" />
-      <button type="submit">bid</button>
+      <button class="bidButtonAlert" type="submit">bid</button>
     </form>
 
     {% for o in bidListmaxs %}
@@ -47,13 +49,23 @@
     </form>
 
     {%for c in comment %}
-    {{c.owner}}
-    <p>
-    {{c.Comment}}
-    </p>
-    {%endfor%}
-
+    <div style="border: 1px solid black; border-color: black;">       
+      <a href="https://example.com">{{c.owner}}</a>
+      <p>
+        {{c.Comment}}
+      </p>
+    </div>
+      {%endfor%}
+      
     <!-- end commint area -->
+    <form action="{% url 'unactive' pk=List.pk %}" method="post">
+      {% csrf.tpken %}
+      <label for="active">display</label>
+      <input id="active" type="checkbox" name="is_active" {% if List.isActive%} checked   {% endif %}>
+      <button type="submit">display</button>
+    </form>
+
+
   </div>
 </div>
 
