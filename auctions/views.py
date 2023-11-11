@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.db.models import Max
 
 
-from .models import User, Listing, Categories, Bid,comments
+from .models import User, Listing, Categories, Bid,comments,ClosedActions
 
 
 def index(request):
@@ -106,11 +106,26 @@ def AddComment(request,pk):
 
     return render(request, "auctions/index.html")
 
-def unactive(request,ok):
+def unactive(request,pk):
     if request.method == 'POST':
-        request.
-    
-    return  render(request, "auctions/DisplayList.html")
+        ISactive =  request.POST.get('is_active')
+        ListINSTans = Listing.objects.get(pk=pk)
+        ListINSTans.isActive = ISactive == 'on'
+        ListINSTans.save()
+        
+        HAIGESTbider = request.POST.get('amountt')
+        bidowner = request.POST.get('bider')
+        userInistans = User.objects.get(username=bidowner)
+
+        savethis = ClosedActions(ClosedList=ListINSTans,
+                                 HaigestBider=HAIGESTbider,
+                                 HaigestBiderwoner=userInistans)
+        savethis.save()
+
+        return render(request, "auctions/index.html")
+    return render(request, "auctions/index.html")
+
+
 
 def login_view(request):
     if request.method == "POST":

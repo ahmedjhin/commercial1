@@ -14,5 +14,5 @@ urlpatterns = [
     path('WatchList', views.WatchList , name='WatchList'),
     path('AddBid/<int:pk>', views.AddBid, name="AddBid"),
     path('AddComment/<int:pk>', views.AddComment, name="AddComment"),
-    path('unactive/<int:pk>', views.unactive, name="Unactive"),
+    path('unactive/<int:pk>', views.unactive, name="unactive"),
 ]

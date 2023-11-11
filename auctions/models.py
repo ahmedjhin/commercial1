@@ -7,10 +7,6 @@ class User(AbstractUser):
     id = models.BigAutoField(primary_key=True)
     pass
 
-
-
-
-
 class Categories(models.Model):
     id = models.BigAutoField(primary_key=True)
     Listings = models.ManyToManyField('Listing', blank=True)
@@ -25,13 +21,10 @@ class Bid(models.Model):
     bidAmount = models.IntegerField()
     BidOnThisList = models.ForeignKey('Listing',on_delete=models.CASCADE,blank=True, null=True, related_name="BidOnThisList")
 
-
 class comments(models.Model):
     Comment = models.CharField(max_length=100)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     onList = models.ForeignKey('Listing', on_delete=models.CASCADE)
-
-
 
 class Listing(models.Model):
     id = models.BigAutoField(primary_key=True)
@@ -48,3 +41,12 @@ class Listing(models.Model):
 
     def __str__(self):
         return  self.ListName
+    
+
+class ClosedActions(models.Model):
+    actionClosed = models.BooleanField(default=True)
+    ClosedList = models.ForeignKey(Listing ,on_delete=models.CASCADE,blank=True, null=True, related_name="ClosedList")
+    HaigestBider = models.CharField( max_length=20)
+    HaigestBiderwoner = models.ForeignKey(User ,on_delete=models.CASCADE,blank=True, null=True, related_name="HaigestBider")
+
+    

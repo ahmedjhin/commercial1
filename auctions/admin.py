@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Listing, Categories, Bid,comments
+from .models import User, Listing, Categories, Bid,comments,ClosedActions
 
 # Register your models here.
 
@@ -14,3 +14,4 @@ admin.site.register(Listing)
 admin.site.register(Categories)
 admin.site.register(Bid, showBidDetails)
 admin.site.register(comments, commentsDetails)
+admin.site.register(ClosedActions)

@@ -1,69 +1,102 @@
 {% extends "auctions/layout.html" %} {% block body %}
 
 <div class="card" style="width: 18rem">
+
   <!--  add and remove from watch list area -->
-  {% if user.is_authenticated %}
-  {% if IsinwatchList == False %}
+  {% if user.is_authenticated %} 
+     {% if IsinwatchList == False %}
   <form action="{% url 'AddListTowatchList' pk=List.pk %}" method="POST">
     {% csrf_token %}
-    <button style=" width:100%;" type="submit" class="btn btn-primary">Add to Watchlist</button>
+    <button style="width: 100%" type="submit" class="btn btn-primary">
+      Add to Watchlist
+    </button>
   </form>
   {% else %}
   <form action="{% url 'RemoveListTowatchList' pk=List.pk %}" method="POST">
     {% csrf_token %}
-    <button style=" width:100%;" type="submit" class="btn btn-primary">Remove From Watchlist</button>
+    <button style="width: 100%" type="submit" class="btn btn-primary">
+      Remove From Watchlist
+    </button>
   </form>
   {% endif %}
   {% endif %}
   <!-- end add and remove from watch list area -->
+
   <img src="{{ List.ListImagesUrl }}" class="card-img-top" alt="..." />
+  <div style="background-color: blanchedalmond; width: 100%">
+    <span style="color: brown; background-color: black">
+      <h1 class="card-title">{{List.ListName}}</h1>
+    </span>
+  </div>
   <div class="card-body">
-    <h5 class="card-title">{{List.ListName}}</h5>
     <p class="card-text">{{List.ListDiscription}}</p>
     <h1>{{List.ListPrice}}$</h1>
-    <!-- bid area-->
-    <form action="{% url 'AddBid' pk=List.pk %}" method="POST">
-      {% csrf_token %}
-      <input type="hidden" name="ListId" value="{{List.pk}}" />
-      <input type="number" name="BidAmount" id="BidAmount" />
-      <button class="bidButtonAlert" type="submit">bid</button>
-    </form>
 
-    {% for o in bidListmaxs %}
-    <p>haighest pid from </p>
-     {{o.BidUser}} 
-    {{o.bidAmount}}
-     {%endfor%}
-    <!-- end bid area -->
-    <!-- coomint area  -->
+
+
+
+
+  
+
+  <!-- add here -->
+  {% if user.is_authenticated %} 
+  <!-- bid area-->
+  <form action="{% url 'AddBid' pk=List.pk %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="ListId" value="{{List.pk}}" />
+    <input required class="form-control" type="number" name="BidAmount" id="BidAmount" />
+    <button class="bidButtonAlert btn btn-primary" type="submit">bid</button>
+  </form>
+
+  {% for o in bidListmaxs %}
+  <p>haighest pid from</p>
+  {{o.BidUser}} {{o.bidAmount}} {%endfor%}
+  <!-- end bid area -->
+
+      <!-- coomint area  -->
     <form action="{% url 'AddComment' pk=List.pk %}" method="POST">
       {% csrf_token %}
-      <input type="text" name="Comment" id="Comment" />
-      <input
+      <input required class="form-control" type="text" name="Comment" id="Comment" />
+      <input 
         type="hidden"
         name="CommentOnList"
         id="CommentOnList"
         value="{{List.pk}}"
       />
-      <button type="submit">commint</button>
+      <button class="btn btn-primary" type="submit">commint</button>
     </form>
 
     {%for c in comment %}
-    <div style="border: 1px solid black; border-color: black;">       
+    <div style="border: 1px solid black; border-color: black">
       <a href="https://example.com">{{c.owner}}</a>
-      <p>
-        {{c.Comment}}
-      </p>
+      <p>{{c.Comment}}</p>
     </div>
-      {%endfor%}
-      
+    {%endfor%}
+
     <!-- end commint area -->
-    <form action="{% url 'unactive' pk=List.pk %}" method="post">
-      {% csrf.tpken %}
-      <label for="active">display</label>
-      <input id="active" type="checkbox" name="is_active" {% if List.isActive%} checked   {% endif %}>
-      <button type="submit">display</button>
-    </form>
+
+
+
+    {% if user.is_authenticated %} 
+  <!-- end the auction area -->
+  <form action="{% url 'unactive' pk=List.pk %}" method="post">
+    {% csrf_token %}
+    <label for="active">display</label>
+    <input id="active" type="checkbox" name="is_active" {% if List.isActive %}checked{% endif %} />
+    {% for o in bidListmaxs %}
+    <input type="hidden" name="amountt" id="amountt" value="{{o.bidAmount}}">
+    <input type="hidden" name="bider" id="bider" value="{{o.BidUser}}">
+    {%endfor%}
+    <button id="closeAction" type="submit" > Close </button>
+  </form>
+  <!-- end the aucton area -->
+  {% endif %}
+  {% endif %}
+
+  <h1 class="hidden" id="CloseMassage">Action Closed</h1>
+  <!-- end  -->
+ 
+
 
 
   </div>

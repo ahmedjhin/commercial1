@@ -19,3 +19,24 @@ body {
     display: flex;
     gap: 22px;
 }
+
+
+
+
+.hidden{ 
+    visibility: hidden;
+    display: none ;
+    background-color: brown;
+}
+
+.gg {
+    visibility: visible;
+    display: block; 
+    background-color: brown;
+}
+
+/* #CloseMassage#active {
+    visibility: visible;
+    display: block;
+    background-color: brown;
+} */
