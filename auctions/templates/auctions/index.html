@@ -17,4 +17,15 @@
      </div>
     {% endfor %}
     </div>
+    {% for selcted in filterdList %}
+    <div class="card " style="width: 18rem;">
+      <img src="{{ selcted.ListImagesUrl }}" class="card-img-top" alt="{{ selcted.ListImagesUrl }}">
+      <div class="card-body">
+        <h5 class="card-title">{{selcted.ListName}}</h5>
+        <p class="card-text">{{selcted.ListDiscription}}</p>
+        <p>item price:{{selcted.ListPrice}}</p>
+      </div>
+   </div>
+    {{selcted.}}
+    {%endfor%}
 {% endblock %}

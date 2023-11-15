@@ -6,28 +6,28 @@
     <div class="ListContainer">
 
       <div class="form-floating width">
-        <input class="form-control" placeholder="ListName" type="text" name="ListName" id="ListName">
+        <input required class="form-control" placeholder="ListName" type="text" name="ListName" id="ListName">
         <label for="ListName">ListName</label>
       </div>  
       
       <div class="form-floating width" >
-        <input type="text" class="form-control" name="ListImage"id="ListImage" placeholder="ListImage">
+        <input required type="text" class="form-control" name="ListImage"id="ListImage" placeholder="ListImage">
         <label for="ListImage">ListImage</label>
       </div>
 
       <div class="form-floating width" >
-        <input type="number" class="form-control" name="ListPrice" id="ListPrice" placeholder="price">
+        <input required type="number" class="form-control" name="ListPrice" id="ListPrice" placeholder="price">
         <label for="price">Price</label>
       </div>
 
       <div class="form-floating width">
-        <input class="form-control" type="text" name="ListDiscription" id="ListDiscription" placeholder="Discription">
+        <input required class="form-control" type="text" name="ListDiscription" id="ListDiscription" placeholder="Discription">
         <label for="ListDiscription"> Discription</label>
       </div>
 
       <div class="form-floating width" >
-        <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="ListCategory" id="ListCategory">
-        <option selected></option>
+        <select required class="form-select" id="floatingSelect" aria-label="Floating label select example" name="ListCategory" id="ListCategory">
+        <option class="hidden-option" selected></option>
         {% for item in catagores %}
         <option value="{{item}}">{{item}}</option>
         {% endfor %}

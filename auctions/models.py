@@ -40,13 +40,11 @@ class Listing(models.Model):
     ListDiscription = models.CharField(max_length=200)
 
     def __str__(self):
-        return  self.ListName
-    
+        return  self.ListName 
 
 class ClosedActions(models.Model):
+    id = models.BigAutoField(primary_key=True)
     actionClosed = models.BooleanField(default=True)
     ClosedList = models.ForeignKey(Listing ,on_delete=models.CASCADE,blank=True, null=True, related_name="ClosedList")
     HaigestBider = models.CharField( max_length=20)
     HaigestBiderwoner = models.ForeignKey(User ,on_delete=models.CASCADE,blank=True, null=True, related_name="HaigestBider")
-
-    

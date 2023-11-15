@@ -11,12 +11,15 @@ from .models import User, Listing, Categories, Bid,comments,ClosedActions
 
 def index(request):
     Activelists = Listing.objects.filter(isActive=True)
+    catagores = Categories.objects.all()
     if User is authenticate:
         test = Listing.objects.exclude(ListOwner=request.user).all()
-        return render(request, "auctions/index.html",{ "Activelists":Activelists,"test":test })
+        return render(request, "auctions/index.html",{ "Activelists":Activelists,
+                                                      'catagores':catagores,
+                                                      "test":test, })
     else:
-        return render(request, "auctions/index.html",{ "Activelists":Activelists})
-    
+        return render(request, "auctions/index.html",{ "Activelists":Activelists,
+                                                      'catagores':catagores,})
 
 def CreatList(request):
     if request.method == "POST":
@@ -25,7 +28,6 @@ def CreatList(request):
         ListImageq = request.POST.get("ListImage")
         ListPriceq = request.POST.get("ListPrice")
         ListDiscriptionq = request.POST.get("ListDiscription")
-        
         ListOwnerq = request.user
         listcatfilterd = Categories.objects.get(CateGname=ListCategoryq)
         NewList = Listing(ListDiscription=ListDiscriptionq,
@@ -42,7 +44,17 @@ def CreatList(request):
     else:
         catagores = Categories.objects.all()
         return render(request, "auctions/CreatListin.html",{'catagores':catagores})
-    
+
+def Catagoreys(request):
+    if request.method == 'POST':
+        catgoname = request.POST.get('ListCategory')
+        cargonameinstans = Categories.objects.get(CateGname=catgoname)
+        filterdList = Listing.objects.filter(ListCategory=cargonameinstans, isActive=True)
+        return render(request, "auctions/index.html",{'filterdList':filterdList})
+    else:
+        catagoris = Categories.objects.all()
+        return render(request, "auctions/Catagoreys.html",{'catagoris':catagoris})
+
 def DisplayList(request , pk):
     if request.method == "GET":
         List = Listing.objects.get(pk=pk)
@@ -50,12 +62,13 @@ def DisplayList(request , pk):
         bidList = Bid.objects.filter(BidOnThisList=List).aggregate(haighstbid=Max('bidAmount'))['haighstbid']
         bidListmaxs = Bid.objects.filter(bidAmount=bidList,BidOnThisList=List)
         comment = reversed(comments.objects.filter(onList=List))
-
+        closedactionInfo = ClosedActions.objects.filter(ClosedList=List)
         return render(request, "auctions/DisplayList.html",{'List':List,
                                                             'IsinwatchList':IsinwatchList,
                                                             'bidList':bidList,
                                                             'bidListmaxs':bidListmaxs,
-                                                            'comment':comment,})
+                                                            'comment':comment,
+                                                            'closedactionInfo':closedactionInfo,})
     return render(request, "auctions/DisplayList.html")
 
 def AddListTowatchList(request , pk):
@@ -66,7 +79,6 @@ def AddListTowatchList(request , pk):
         theList.save()
         return  HttpResponseRedirect(reverse("DisplayList" , args=(pk,)))
 
-
 def RemoveListTowatchList(request , pk):
     if request.method == "POST":
         userThatOwnsTheWatchList = request.user
@@ -74,7 +86,7 @@ def RemoveListTowatchList(request , pk):
         theList.ListWatchList.remove(userThatOwnsTheWatchList)
         theList.save()
         return  redirect(reverse("DisplayList" ,args=(pk,)))
-    
+
 def WatchList(request):
     listingsD = Listing.objects.filter(ListWatchList=request.user)
     return render(request,  'auctions/watchList.html', {'listingsD':listingsD})
@@ -119,13 +131,20 @@ def unactive(request,pk):
 
         savethis = ClosedActions(ClosedList=ListINSTans,
                                  HaigestBider=HAIGESTbider,
-                                 HaigestBiderwoner=userInistans)
-        savethis.save()
+                                 HaigestBiderwoner=userInistans,
+                                 actionClosed=False)
+        existing_instance = ClosedActions.objects.filter(
+        ClosedList=ListINSTans,
+        HaigestBider=HAIGESTbider,
+        HaigestBiderwoner=userInistans,
+        actionClosed=False).first()
 
-        return render(request, "auctions/index.html")
+        if existing_instance is None:
+        # If the instance doesn't exist, save it
+            savethis.save()
+
+        return redirect(reverse('DisplayList' , args=(pk,)))
     return render(request, "auctions/index.html")
-
-
 
 def login_view(request):
     if request.method == "POST":
@@ -146,11 +165,9 @@ def login_view(request):
     else:
         return render(request, "auctions/login.html")
 
-
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
-
 
 def register(request):
     if request.method == "POST":

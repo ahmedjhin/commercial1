@@ -35,6 +35,12 @@ body {
     background-color: brown;
 }
 
+
+
+.hidden-option {
+    visibility: hidden;
+    display: none;
+  }  
 /* #CloseMassage#active {
     visibility: visible;
     display: block;

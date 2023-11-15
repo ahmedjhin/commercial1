@@ -95,8 +95,13 @@
 
   <h1 class="hidden" id="CloseMassage">Action Closed</h1>
   <!-- end  -->
- 
-
+  {% for CC in closedactionInfo %}
+  {% if CC.actionClosed == False %}
+  <h1>Action Closed For {{CC.HaigestBiderwoner}}</h1>
+  {{CC.ClosedList}}
+  {{CC.HaigestBider}}
+  {% endif %}
+  {%endfor%}
 
 
   </div>

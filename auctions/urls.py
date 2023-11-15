@@ -15,4 +15,5 @@ urlpatterns = [
     path('AddBid/<int:pk>', views.AddBid, name="AddBid"),
     path('AddComment/<int:pk>', views.AddComment, name="AddComment"),
     path('unactive/<int:pk>', views.unactive, name="unactive"),
+    path('Catagoreys', views.Catagoreys, name="Catagoreys"),
 ]
