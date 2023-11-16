@@ -63,11 +63,13 @@ def DisplayList(request , pk):
         bidListmaxs = Bid.objects.filter(bidAmount=bidList,BidOnThisList=List)
         comment = reversed(comments.objects.filter(onList=List))
         closedactionInfo = ClosedActions.objects.filter(ClosedList=List)
+        massage = request.GET.get('massage', '')
         return render(request, "auctions/DisplayList.html",{'List':List,
                                                             'IsinwatchList':IsinwatchList,
                                                             'bidList':bidList,
                                                             'bidListmaxs':bidListmaxs,
                                                             'comment':comment,
+                                                            'massage':massage,
                                                             'closedactionInfo':closedactionInfo,})
     return render(request, "auctions/DisplayList.html")
 
@@ -97,10 +99,18 @@ def AddBid(request,pk):
         ListId= request.POST.get('ListId')
         ListInstance = Listing.objects.get(pk=ListId)
         bid = request.POST.get('BidAmount')
-        newBid = Bid(BidUser=BidOwner,
+        List = Listing.objects.get(pk=pk)
+        bidList = Bid.objects.filter(BidOnThisList=List).aggregate(haighstbid=Max('bidAmount'))['haighstbid']
+        bidListmaxs = Bid.objects.filter(bidAmount=bidList,BidOnThisList=List)
+        for a in bidListmaxs:
+            if int(bid) < int(a.bidAmount):
+                massage = True
+                return redirect(reverse("DisplayList" ,args=(pk,)) + f'?massage={massage}')
+        else:
+            newBid = Bid(BidUser=BidOwner,
                      bidAmount=bid,
                      BidOnThisList=ListInstance,)
-        newBid.save()
+            newBid.save()
         return redirect(reverse("DisplayList" ,args=(pk,)))
     return redirect(reverse("DisplayList" ,args=(pk,)))
 

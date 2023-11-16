@@ -47,9 +47,13 @@
     <input required class="form-control" type="number" name="BidAmount" id="BidAmount" />
     <button class="bidButtonAlert btn btn-primary" type="submit">bid</button>
   </form>
+  {% if massage %}
+  <p>bid is too low</p>
+  {%endif%}
 
   {% for o in bidListmaxs %}
   <p>haighest pid from</p>
+
   {{o.BidUser}} {{o.bidAmount}} {%endfor%}
   <!-- end bid area -->
 
@@ -77,7 +81,7 @@
 
 
 
-    {% if user.is_authenticated %} 
+  {% if user.is_authenticated %} 
   <!-- end the auction area -->
   <form action="{% url 'unactive' pk=List.pk %}" method="post">
     {% csrf_token %}
@@ -106,5 +110,4 @@
 
   </div>
 </div>
-
 {% endblock %}

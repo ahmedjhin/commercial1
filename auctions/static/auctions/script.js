@@ -1,4 +1,5 @@
 function Fire() {
+   
     alert("bid has been placed")
 }
 
@@ -13,7 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
     bidButtonElement.addEventListener('click', Fire);
     }
 
-    ClosedActionElement.addEventListener('click', ()  => {
+    ClosedActionElement.addEventListener('click', (e)  => {
+        e.preventDefault();
         CloseActionElement.className = "gg"
 
 
