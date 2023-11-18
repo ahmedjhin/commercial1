@@ -84,6 +84,7 @@
   {% if user.is_authenticated %} 
   <!-- end the auction area -->
   <form action="{% url 'unactive' pk=List.pk %}" method="POST">
+  <form action="{% url 'unactive' pk=List.pk %}" method="POST">
     {% csrf_token %}
     <label for="is_active">dd</label>
     <input id="is_active" type="checkbox" name="is_active" {% if List.isActive %}checked{% endif %} />

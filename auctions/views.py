@@ -133,6 +133,7 @@ def unactive(request,pk):
         ISactive =  request.POST.get('is_active')
         ListINSTans = Listing.objects.get(pk=pk)
         ListINSTans.isActive = False
+        ListINSTans.isActive = False
         ListINSTans.save()
         ListINSTans1 = Listing.objects.get(pk=pk)
         HAIGESTbider = request.POST.get('amountt')
