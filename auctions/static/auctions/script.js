@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
     bidButtonElement.addEventListener('click', Fire);
     }
 
-    ClosedActionElement.addEventListener('click', (e)  => {
-        e.preventDefault();
+    ClosedActionElement.addEventListener('click', ()  => {
+        
         CloseActionElement.className = "gg"
 
 

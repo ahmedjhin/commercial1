@@ -132,9 +132,8 @@ def unactive(request,pk):
     if request.method == 'POST':
         ISactive =  request.POST.get('is_active')
         ListINSTans = Listing.objects.get(pk=pk)
-        ListINSTans.isActive = ISactive == 'on'
+        ListINSTans.isActive = False
         ListINSTans.save()
-        
         HAIGESTbider = request.POST.get('amountt')
         bidowner = request.POST.get('bider')
         userInistans = User.objects.get(username=bidowner)
@@ -147,7 +146,7 @@ def unactive(request,pk):
         ClosedList=ListINSTans,
         HaigestBider=HAIGESTbider,
         HaigestBiderwoner=userInistans,
-        actionClosed=False).first()
+        actionClosed=False)
 
         if existing_instance is None:
         # If the instance doesn't exist, save it

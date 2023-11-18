@@ -44,7 +44,7 @@ class Listing(models.Model):
 
 class ClosedActions(models.Model):
     id = models.BigAutoField(primary_key=True)
-    actionClosed = models.BooleanField(default=True)
+    actionClosed = models.BooleanField(default=False)
     ClosedList = models.ForeignKey(Listing ,on_delete=models.CASCADE,blank=True, null=True, related_name="ClosedList")
     HaigestBider = models.CharField( max_length=20)
     HaigestBiderwoner = models.ForeignKey(User ,on_delete=models.CASCADE,blank=True, null=True, related_name="HaigestBider")

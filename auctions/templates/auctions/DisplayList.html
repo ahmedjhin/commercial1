@@ -83,15 +83,15 @@
 
   {% if user.is_authenticated %} 
   <!-- end the auction area -->
-  <form action="{% url 'unactive' pk=List.pk %}" method="post">
+  <form action="{% url 'unactive' pk=List.pk %}" method="POST">
     {% csrf_token %}
     <label for="active">display</label>
-    <input id="active" type="checkbox" name="is_active" {% if List.isActive %}checked{% endif %} />
+    <input id="is_active" type="checkbox" name="is_active" {% if List.isActive %}checked{% endif %} />
     {% for o in bidListmaxs %}
     <input type="hidden" name="amountt" id="amountt" value="{{o.bidAmount}}">
     <input type="hidden" name="bider" id="bider" value="{{o.BidUser}}">
     {%endfor%}
-    <button id="closeAction" type="submit" > Close </button>
+    <button id="closeAction" class="btn" type="submit" > Close </button>
   </form>
   <!-- end the aucton area -->
   {% endif %}
@@ -100,7 +100,7 @@
   <h1 class="hidden" id="CloseMassage">Action Closed</h1>
   <!-- end  -->
   {% for CC in closedactionInfo %}
-  {% if CC.actionClosed == False %}
+  {% if CC.actionClosed  %}
   <h1>Action Closed For {{CC.HaigestBiderwoner}}</h1>
   {{CC.ClosedList}}
   {{CC.HaigestBider}}
