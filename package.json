@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.5"
+  },
+  "scripts": {
+    "build:css": "postcss C:/Users/hugee/Desktop/commerce1/auctions/static/auctions/styles.css -o C:/Users/hugee/Desktop/commerce1/auctions/static/auctions/bomb.css",
+    "dev": " npx tailwindcss -i C:/Users/hugee/Desktop/commerce1/auctions/static/auctions/styles.css -o C:/Users/hugee/Desktop/commerce1/auctions/static/auctions/bomb.css --watch"
+  }
+}

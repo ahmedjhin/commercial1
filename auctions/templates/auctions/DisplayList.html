@@ -85,13 +85,13 @@
   <!-- end the auction area -->
   <form action="{% url 'unactive' pk=List.pk %}" method="POST">
     {% csrf_token %}
-    <label for="active">display</label>
+    <label for="is_active">dd</label>
     <input id="is_active" type="checkbox" name="is_active" {% if List.isActive %}checked{% endif %} />
     {% for o in bidListmaxs %}
     <input type="hidden" name="amountt" id="amountt" value="{{o.bidAmount}}">
     <input type="hidden" name="bider" id="bider" value="{{o.BidUser}}">
     {%endfor%}
-    <button id="closeAction" class="btn" type="submit" > Close </button>
+    <button id="closeAction" class="btn btn-primary" type="submit" > Close </button>
   </form>
   <!-- end the aucton area -->
   {% endif %}

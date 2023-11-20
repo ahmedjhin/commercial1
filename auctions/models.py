@@ -35,7 +35,7 @@ class Listing(models.Model):
     ListPrice = models.CharField(max_length=20)
     created_at = models.DateTimeField(auto_now_add=True,blank=True, null=True)
     ListCategory = models.ForeignKey(Categories, on_delete=models.CASCADE, null=True,blank=True,related_name='ListingCategory')
-    ListImagesUrl = models.CharField(max_length=1000, blank=True, null=True,)
+    ListImagesUrl = models.CharField(max_length=10000, blank=True, null=True,)
     ListWatchList = models.ManyToManyField(User)
     ListDiscription = models.CharField(max_length=200)
 

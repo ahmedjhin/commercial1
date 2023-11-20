@@ -134,24 +134,25 @@ def unactive(request,pk):
         ListINSTans = Listing.objects.get(pk=pk)
         ListINSTans.isActive = False
         ListINSTans.save()
+        ListINSTans1 = Listing.objects.get(pk=pk)
         HAIGESTbider = request.POST.get('amountt')
         bidowner = request.POST.get('bider')
         userInistans = User.objects.get(username=bidowner)
 
-        savethis = ClosedActions(ClosedList=ListINSTans,
+        savethis = ClosedActions(ClosedList=ListINSTans1,
                                  HaigestBider=HAIGESTbider,
                                  HaigestBiderwoner=userInistans,
-                                 actionClosed=False)
+                                 actionClosed=True)
+        
         existing_instance = ClosedActions.objects.filter(
-        ClosedList=ListINSTans,
+        ClosedList=ListINSTans1,
         HaigestBider=HAIGESTbider,
         HaigestBiderwoner=userInistans,
-        actionClosed=False)
+        actionClosed=True)
 
-        if existing_instance is None:
+        if  not existing_instance.exists():
         # If the instance doesn't exist, save it
             savethis.save()
-
         return redirect(reverse('DisplayList' , args=(pk,)))
     return render(request, "auctions/index.html")
 
