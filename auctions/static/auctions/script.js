@@ -6,6 +6,16 @@ function Fire() {
 
 document.addEventListener('DOMContentLoaded', () => {
     
+    let buttons = document.querySelectorAll('.A')
+    buttons.forEach(elemtn => {
+        elemtn.addEventListener(click , () => {
+            
+            elemtn.className = "d"
+        })
+    })
+
+
+
      CloseActionElement = document.querySelector(".hidden")
      ClosedActionElement = document.getElementById("closeAction")
     
