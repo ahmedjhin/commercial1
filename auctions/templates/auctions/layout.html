@@ -7,11 +7,17 @@
     <link rel="icon" type="image/png" href="{% static 'auctions/icons8-ak-47-16.png' %}">
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> -->
     <link href="{% static 'auctions/styles.css' %}" rel="stylesheet" />
-    <link href="{% static 'acutions/bomb.css' %}" rel="stylesheet">
-    <script src="{% static 'auctions/script.js' %}"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="{% static 'acutions/outpt.css' %}" rel="stylesheet">
+    <script src="{% static 'auctions/script.js' %}"defer></script>
+    <script src="https://cdn.tailwindcss.com" defer></script>
     
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+
+
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    
+    <!-- <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> -->
   </head>
   <body>
     <h1>Auctions</h1>
@@ -19,13 +25,13 @@
       {% if user.is_authenticated %} Signed in as
       <strong>{{ user.username }}</strong>. {% else %} Not signed in. {% endif%}
     </div>
-    <ul class="  flex border-b">
-      <li  class="nav-item">
-        <a class="A nav-link" href="{% url 'index' %}">Active Listings</a>
+    <ul class=" flex flex-row  ">
+      <li  class="nav-item ">
+        <a class="" href="{% url 'index' %}">Active Listings</a>
       </li>
       {% if user.is_authenticated %}
-      <li class="nav-item">
-        <a class="A nav-link" href="{% url 'logout' %}">Log Out</a>
+      <li class="nav-item ">
+        <a class="A nav-link bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" href="{% url 'logout' %}">Log Out</a>
       </li>
       <li class="nav-item">
         <a class="A nav-link" href="{% url 'CreatList' %}">Creat List</a>

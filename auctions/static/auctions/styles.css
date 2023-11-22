@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
@@ -19,10 +22,6 @@ body {
     flex-wrap: wrap;
 }
 
-.flex{
-    display: flex;
-    gap: 22px;
-}
 
 
 
