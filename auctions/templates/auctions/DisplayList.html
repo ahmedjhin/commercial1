@@ -14,7 +14,7 @@
   {% else %}
   <form action="{% url 'RemoveListTowatchList' pk=List.pk %}" method="POST">
     {% csrf_token %}
-    <button style="width: 100%" type="submit" class="btn btn-primary">
+    <button style="width: 100% " type="submit" class="btn btn-primary">
       Remove From Watchlist
     </button>
   </form>

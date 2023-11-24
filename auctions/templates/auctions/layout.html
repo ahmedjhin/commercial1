@@ -20,50 +20,68 @@
     <!-- <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> -->
   </head>
   <body>
-    <h1>Auctions</h1>
-    <div>
-      {% if user.is_authenticated %} Signed in as
-      <strong>{{ user.username }}</strong>. {% else %} Not signed in. {% endif%}
-    </div>
-    <ul class=" flex flex-row  ">
-      <li  class="nav-item ">
-        <a class="" href="{% url 'index' %}">Active Listings</a>
-      </li>
-      {% if user.is_authenticated %}
-      <li class="nav-item ">
-        <a class="A nav-link bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" href="{% url 'logout' %}">Log Out</a>
-      </li>
-      <li class="nav-item">
-        <a class="A nav-link" href="{% url 'CreatList' %}">Creat List</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'Catagoreys' %}">Catagoreys</a>
-      </li>
-      <li class="nav-item">
-        <div  style="display: flex;align-items: center;">
-          <span>{{d}}</span>
-          <a class="nav-link" href="{% url 'WatchList' %}">  your watch List</a>
-        </div>
-      </li>
-      {% else %}
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'login' %}">Log In</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'register' %}">Register</a>
-      </li>
-      <li class="">
-        <a href=""></a>
-      </li>
+    <header>
+
+      <h1>Auctions</h1>
+      <div class="py-3">
+        {% if user.is_authenticated %} Signed in as
+        <strong>{{ user.username }}</strong>. {% else %} Not signed in. {% endif%}
+      </div>
+      <ul class=" flex flex-row py-3 ">
+        <li  class="nav-item ">
+          <a class="text-blue-500 hover:text-blue-800 A" href="{% url 'index' %}">Active Listings</a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="mr-6 ">
+          <a class="text-blue-500 hover:text-blue-800 A" href="{% url 'logout' %}">Log Out</a>
+        </li>
+        <li class="nav-item">
+          <a class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 A" href="{% url 'CreatList' %}">Creat List</a>
+        </li>
+        <li class="nav-item">
+          <a class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 A" href="{% url 'Catagoreys' %}">Catagoreys</a>
+        </li>
+        <li class="nav-item">
+          <span class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 A">{{d}}</span>
+        </li>
+        <li class="nav-item">
+            <a class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 A" href="{% url 'WatchList' %}">  your watch List</a>
+          
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 A" href="{% url 'login' %}">Log In</a>
+        </li>
+        <li class="nav-item">
+          <a class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 A" href="{% url 'register' %}">Register</a>
+        </li>
+        <li class="">
+          <a href=""></a>
+        </li>
       
-      {% endif %}
-    </ul>
-    <hr />
-    {% block body %} {% endblock %}
-  </body>
-</html>
-<!-- Create Listing: Users should be able to visit a page to create a new listing.
-     They should be able to specify a title for the listing, a text-based description,
-     and what the starting bid should be. Users should also optionally be able to provide a
-     URL for an image for the listing and/or a category
+        {% endif %}
+      </ul>
+      <hr />
+    </header>
+      {% block body %} {% endblock %}
+      <script>
+        let buttons = document.querySelectorAll(".A");
+
+        function amongs() {
+            this.classList.add('bg-white', 'inline-block', 'border-l', 'border-t', 'border-r', 'rounded-t', 'py-2', 'px-4', 'text-blue-700', 'font-semibold');
+        }
+
+        // Ensure the script runs after the page is fully loaded
+        window.onload = function() {
+            buttons.forEach(element => {
+                element.addEventListener('click', amongs);
+            });
+        };
+    </script>
+    </body>
+    </html>
+    <!-- Create Listing: Users should be able to visit a page to create a new listing.
+      They should be able to specify a title for the listing, a text-based description,
+      and what the starting bid should be. Users should also optionally be able to provide a
+      URL for an image for the listing and/or a category
      (e.g. Fashion, Toys, Electronics, Home, etc.). -->
